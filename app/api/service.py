@@ -4,7 +4,7 @@ from app.db.models import *
 from .models import *
 from app.utils.logger import ModuleLogger
 
-
+db = Database()
 logger = ModuleLogger(__name__).get_logger()
 
 

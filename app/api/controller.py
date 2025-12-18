@@ -5,9 +5,7 @@ from .service import APIService
 
 
 router = APIRouter()
-db = Database()
 service = APIService()
-
 
 
 
