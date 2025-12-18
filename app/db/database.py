@@ -1,0 +1,37 @@
+from typing import Type, TypeVar, Sequence
+from sqlalchemy import select
+from app.db.session import SessionFactory
+from app.db.base import Base
+
+T = TypeVar("T", bound=Base)
+
+class Database:
+	def __init__(self):
+		self._session_factory = SessionFactory
+
+	async def get(self, model: Type[T], pk) -> T | None:
+		async with self._session_factory() as session:
+			return await session.get(model, pk)
+
+	async def save(self, obj: T) -> T:
+		async with self._session_factory() as session:
+			session.add(obj)
+			await session.commit()
+			return obj
+
+	async def delete(self, obj: T):
+		async with self._session_factory() as session:
+			await session.delete(obj)
+			await session.commit()
+
+	async def filter(
+		self,
+		model: Type[T],
+		*conditions
+	) -> Sequence[T]:
+		async with self._session_factory() as session:
+			stmt = select(model)
+			if conditions:
+				stmt = stmt.where(*conditions)
+			result = await session.execute(stmt)
+			return result.scalars().all()
