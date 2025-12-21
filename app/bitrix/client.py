@@ -7,7 +7,7 @@ import httpx
 
 BITRIX_CLIENT_ID = os.getenv("BITRIX_CLIENT_ID")
 BITRIX_CLIENT_SECRET = os.getenv("BITRIX_CLIENT_SECRET")
-BITRIX_OAUTH_URL = "https://oauth.bitrix.info/oauth/token"
+BITRIX_OAUTH_URL = "https://oauth.bitrix.info/oauth/token/"
 
 
 
