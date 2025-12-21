@@ -1,13 +1,19 @@
 from typing import Type, TypeVar, Sequence
 from sqlalchemy import select
-from app.db.session import SessionFactory
-from app.db.base import Base
+from .session import SessionFactory
+from .base import Base
+from . import models
 
 T = TypeVar("T", bound=Base)
 
 class Database:
 	def __init__(self):
 		self._session_factory = SessionFactory
+
+	@staticmethod
+	async def init_db():
+		async with engine.begin() as conn:
+			await conn.run_sync(Base.metadata.create_all)
 
 	async def get(self, model: Type[T], pk) -> T | None:
 		async with self._session_factory() as session:

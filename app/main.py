@@ -1,6 +1,7 @@
 from .api.controller import router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from .db.database import Database
 
 
 
@@ -18,3 +19,8 @@ app.add_middleware(
 
 
 app.include_router(router, tags=["App Module"])
+
+
+@app.on_event("startup"):
+async def on_startup():
+    await Database.init_db()
