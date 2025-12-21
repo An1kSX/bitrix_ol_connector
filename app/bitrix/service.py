@@ -24,5 +24,6 @@ class BitrixService:
 	async def get_users(self):
 		client = await self._get_client()
 		method = "user.get"
+		params = {}
 
-		return await client.call(method)
+		return await client.call(method, params)
