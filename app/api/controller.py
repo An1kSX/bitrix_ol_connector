@@ -11,7 +11,7 @@ service = APIService()
 
 @router.post("/install")
 async def install(request: Request):
-	auth = await parse_install(request)
+	auth = await service.parse_install(request)
 
 	portal = await service.get_portal(auth.domain)
 
