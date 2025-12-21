@@ -2,6 +2,8 @@ from .api.controller import router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .db.database import Database
+from .db.models import *
+from .bitrix.client import Bitrix
 
 
 
@@ -17,6 +19,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+db = Database()
+
 
 app.include_router(router, tags=["App Module"])
 
@@ -24,3 +28,8 @@ app.include_router(router, tags=["App Module"])
 @app.on_event("startup")
 async def on_startup():
     await Database.init_db()
+
+    portal = await db.get(Portal, "atbaccounting.bitrix24.kz")
+    bx24 = Bitrix(portal)
+    await bx24.get_users()
+    

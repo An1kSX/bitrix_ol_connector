@@ -22,3 +22,11 @@ async def install(request: Request):
 
 	except Exception as e:
 		raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/handler")
+async def handler(request: Request):
+	try:
+		return {"status": 'ok', "request": str(request)}
+
+	except Exception as e:
+		request HTTPException(status_code=500, detail=str(e))

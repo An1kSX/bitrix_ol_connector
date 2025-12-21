@@ -1,7 +1,6 @@
 from fast_bitrix24 import BitrixAsync
 from app.db import models
 from app.db.database import db
-from fast_bitrix24 import BitrixAsync
 import os
 import httpx
 
@@ -12,7 +11,7 @@ BITRIX_OAUTH_URL = "https://oauth.bitrix.info/oauth/token"
 
 
 
-class BitrixClient:
+class Bitrix:
 	def __init__(self, portal: models.Portal):
 		self.portal = portal
 		self.client = BitrixAsync(
@@ -27,6 +26,9 @@ class BitrixClient:
 			BITRIX_CLIENT_SECRET,
 			self.portal.token.refresh_token
 		)
+
+		if "access_token" not in data:
+			raise RuntimeError("Failed to refresh Bitrix token")
 
 		self.portal.token.access_token = data["access_token"]
 		self.portal.token.refresh_token = data["refresh_token"]
@@ -54,3 +56,11 @@ class BitrixClient:
 
 		resp.raise_for_status()
 		return resp.json()
+
+
+	async def get_users(self):
+		method = "user.get"
+
+		res = await self.client.call(method)
+
+		print(res)
