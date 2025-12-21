@@ -5,3 +5,4 @@ asyncpg
 pydantic
 python-multipart
 fast_bitrix24
+httpx
