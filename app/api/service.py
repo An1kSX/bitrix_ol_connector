@@ -10,7 +10,7 @@ logger = ModuleLogger(__name__).get_logger()
 
 
 class APIService:
-	async def parse_install(request: Request) -> BitrixAuth:
+	async def parse_install(self, request: Request) -> BitrixAuth:
 		try:
 			form = await request.form()
 
