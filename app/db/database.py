@@ -1,6 +1,6 @@
 from typing import Type, TypeVar, Sequence
 from sqlalchemy import select
-from .session import SessionFactory
+from .session import SessionFactory, engine
 from .base import Base
 from . import models
 
