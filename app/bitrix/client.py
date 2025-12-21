@@ -15,8 +15,7 @@ class Bitrix:
 	def __init__(self, portal: models.Portal):
 		self.portal = portal
 		self.client = BitrixAsync(
-			portal=f"https://{portal.domain}",
-			token=self.portal.token.access_token,
+			webhook=f"https://{portal.domain}",
 			token_func=self._token_func
 		)
 
