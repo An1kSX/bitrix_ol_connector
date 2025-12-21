@@ -43,4 +43,4 @@ class Database:
 			return result.scalars().all()
 
 
-db = Database(SessionFactory)
+db = Database()
