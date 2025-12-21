@@ -1,10 +1,10 @@
 from fastapi import Request
-from app.db import Database
+from app.db import database
 from app.db.models import *
 from .models import *
 from app.utils.logger import ModuleLogger
 
-db = Database()
+
 logger = ModuleLogger(__name__).get_logger()
 
 
@@ -28,7 +28,7 @@ class APIService:
 
 	async def get_portal(self, domain: str) -> Portal | None:
 		try:
-			portal = await db.get(Portal, domain)
+			portal = await database.get(Portal, domain)
 
 			return portal
 
@@ -60,7 +60,7 @@ class APIService:
 					)
 				)
 
-			await db.save(portal)
+			await database.save(portal)
 
 		except Exception as e:
 			logger.error(f"Save portal error: {e}")

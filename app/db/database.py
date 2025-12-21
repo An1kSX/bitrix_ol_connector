@@ -41,3 +41,6 @@ class Database:
 				stmt = stmt.where(*conditions)
 			result = await session.execute(stmt)
 			return result.scalars().all()
+
+
+db = Database(SessionFactory)
