@@ -21,6 +21,6 @@ app.add_middleware(
 app.include_router(router, tags=["App Module"])
 
 
-@app.on_event("startup"):
+@app.on_event("startup")
 async def on_startup():
     await Database.init_db()
