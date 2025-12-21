@@ -10,13 +10,16 @@ class BitrixService:
 		self.domain = domain
 		self.bx24 = None
 
-	async def _get_client(self) -> Bitrix:
-		portal = await database.get(Portal, self.domain)
+	async def _get_client(self):
+		if not self.bx24:
+			portal = await database.get(Portal, self.domain)
 
-		if not portal or not portal.token:
-			raise RuntimeError("Portal not installed")
+			if not portal or not portal.token:
+				raise RuntimeError("Portal not installed")
 
-		return Bitrix(portal)
+			self.bx24 = Bitrix(client)
+
+		return self.bx24.client
 
 	async def get_users(self):
 		client = await self._get_client()
