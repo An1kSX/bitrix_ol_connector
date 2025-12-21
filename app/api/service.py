@@ -36,13 +36,20 @@ class APIService:
 			logger.error(f"Get portal error: {e}")
 			raise
 
-	async def save_portal(self, portal: Portal, auth: BitrixAuth) -> None:
+	async def save_portal(self, portal: Portal | None, auth: BitrixAuth) -> None:
 		try:
 			if portal:
 				portal.member_id = auth.member_id
-				portal.token.access_token = auth.access_token
-				portal.token.refresh_token = auth.refresh_token
 
+				if portal.token:
+					portal.token.access_token = auth.access_token
+					portal.token.refresh_token = auth.refresh_token
+					
+				else:
+					portal.token = Token(
+						access_token=auth.access_token,
+						refresh_token=auth.refresh_token
+					)
 			else:
 				portal = Portal(
 					domain=auth.domain,
