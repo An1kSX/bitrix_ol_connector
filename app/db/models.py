@@ -12,7 +12,8 @@ class Portal(Base):
 	token: Mapped["Token"] = relationship(
 		back_populates="portal",
 		uselist=False,
-		cascade="all, delete-orphan"
+		cascade="all, delete-orphan",
+		lazy="selectin"
 	)
 
 
@@ -29,5 +30,6 @@ class Token(Base):
 	refresh_token: Mapped[str]
 
 	portal: Mapped["Portal"] = relationship(
-		back_populates="token"
+		back_populates="token",
+		lazy="selectin"
 	)
