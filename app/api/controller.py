@@ -29,4 +29,4 @@ async def handler(request: Request):
 		return {"status": 'ok', "request": str(request)}
 
 	except Exception as e:
-		request HTTPException(status_code=500, detail=str(e))
+		raise HTTPException(status_code=500, detail=str(e))
