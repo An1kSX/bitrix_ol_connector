@@ -16,7 +16,7 @@ async def install(request: Request):
 
 		portal = await service.get_portal(auth.domain)
 
-		await service.save_portal(portal)
+		await service.save_portal(portal, auth)
 
 		return {"status": "ok"}
 

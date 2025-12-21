@@ -36,7 +36,7 @@ class APIService:
 			logger.error(f"Get portal error: {e}")
 			raise
 
-	async def save_portal(self, portal: Portal) -> None:
+	async def save_portal(self, portal: Portal, auth: BitrixAuth) -> None:
 		try:
 			if portal:
 				portal.member_id = auth.member_id
