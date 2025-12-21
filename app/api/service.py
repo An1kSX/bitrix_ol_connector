@@ -26,11 +26,11 @@ class APIService:
 			logger.error(f"Parse install error: {e}")
 			raise
 
-	async def get_portal(self, domain: str) -> Portal:
+	async def get_portal(self, domain: str) -> Portal | None:
 		try:
 			portal = await db.get(Portal, domain)
 
-			return Portal
+			return portal
 
 		except Exception as e:
 			logger.error(f"Get portal error: {e}")
