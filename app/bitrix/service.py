@@ -17,7 +17,7 @@ class BitrixService:
 			if not portal or not portal.token:
 				raise RuntimeError("Portal not installed")
 
-			self.bx24 = Bitrix(client)
+			self.bx24 = Bitrix(portal)
 
 		return self.bx24.client
 
