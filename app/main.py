@@ -25,7 +25,7 @@ app.include_router(router, tags=["App Module"])
 
 @app.on_event("startup")
 async def on_startup():
-    await Database.init_db()
+    await database.init_db()
 
     portal = await db.get(Portal, "atbaccounting.bitrix24.kz")
     bx24 = Bitrix(portal)
