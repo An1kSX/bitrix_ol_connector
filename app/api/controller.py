@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, HTTPException
 from .service import APIService
 
 
@@ -11,10 +11,14 @@ service = APIService()
 
 @router.post("/install")
 async def install(request: Request):
-	auth = await service.parse_install(request)
+	try:
+		auth = await service.parse_install(request)
 
-	portal = await service.get_portal(auth.domain)
+		portal = await service.get_portal(auth.domain)
 
-	await service.save_portal(portal)
+		await service.save_portal(portal)
 
-	return {"status": "ok"}
+		return {"status": "ok"}
+
+	except Exception as e:
+		raise HTTPException(status_code=500, detail=str(e))
