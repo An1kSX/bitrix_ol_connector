@@ -1,6 +1,6 @@
 from fast_bitrix24 import BitrixAsync
 from app.db import models
-from app.db.database import db
+from app.db.database import Database
 import os
 import httpx
 
@@ -14,6 +14,7 @@ BITRIX_OAUTH_URL = "https://oauth.bitrix.info/oauth/token"
 class Bitrix:
 	def __init__(self, portal: models.Portal):
 		self.portal = portal
+		self.db = Database()
 		self.client = BitrixAsync(
 			portal=f"https://{portal.domain}",
 			token=self.portal.token.access_token,
@@ -33,7 +34,7 @@ class Bitrix:
 		self.portal.token.access_token = data["access_token"]
 		self.portal.token.refresh_token = data["refresh_token"]
 
-		await db.save(self.portal)
+		await self.db.save(self.portal)
 
 		return self.portal.token.access_token
 
