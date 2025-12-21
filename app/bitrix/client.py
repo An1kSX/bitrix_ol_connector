@@ -43,15 +43,16 @@ class Bitrix:
 		refresh_token: str
 	) -> dict:
 		async with httpx.AsyncClient(timeout=10) as client:
-			resp = await client.get(
+			resp = await client.post(
 				BITRIX_OAUTH_URL,
-				params={
+				data={
 					"grant_type": "refresh_token",
 					"client_id": client_id,
 					"client_secret": client_secret,
 					"refresh_token": refresh_token,
 				}
 			)
+
 
 		resp.raise_for_status()
 		return resp.json()
